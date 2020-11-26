@@ -1,5 +1,5 @@
 const { isEmail } = require('validator');
-const { createUserRepo, getUsersRepo, getUserRepo, updateUserRepo, deleteUserRepo } = require('../repository/userRepository');
+const { createUserRepo, loginRepo, getUsersRepo, getUserRepo, updateUserRepo, deleteUserRepo } = require('../repository/userRepository');
 const { validateName, handleError } = require('../utils');
 const { InvalidFieldsError, UnknownError, InvalidIdError } = require('../errors');
 
@@ -103,6 +103,17 @@ const createUserService = async (user) => {
   }
 };
 
+const loginService = async ({ email, password }) => {
+  try {
+    const resp = await loginRepo({ email, password });
+    return {
+      user: resp,
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
 const getUsersService = async (from, limit, fields) => {
   try {
     const resp = await getUsersRepo(from, limit, fields);
@@ -158,6 +169,7 @@ const deleteUserService = async id => {
 
 module.exports = {
   createUserService,
+  loginService,
   getUsersService,
   getUserService,
   updateUserService,

@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const { validateFieldsExists } = require('../utils');
 const UserModel = require('../models/user');
-const { InvalidFieldsError } = require('../errors');
+const { InvalidFieldsError, AuthError } = require('../errors');
 
 const SALT_ROUNDS = process.env.SALT_ROUNDS;
 
@@ -15,6 +15,14 @@ const createUserRepo = async ({ name, lastName, email, password }) => {
   });
   const newUser = await user.save();
   return newUser;
+};
+
+const loginRepo = async ({ email, password }) => {
+  const user = await UserModel.findOne({ email }).exec();
+  if (!user || !bcrypt.compareSync(password, user.password)) {
+    throw new AuthError('Usuario o contraseña incorrectos');
+  }
+  return user;
 };
 
 // NOTE Throws error when receives a negative value in from field
@@ -52,6 +60,7 @@ const deleteUserRepo = async id => {
 
 module.exports = {
   createUserRepo,
+  loginRepo,
   getUsersRepo,
   getUserRepo,
   updateUserRepo,
