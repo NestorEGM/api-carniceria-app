@@ -24,3 +24,17 @@ process.env.URL_DB = urlDB;
 // Salt rounds for bcrypt
 // **************************
 process.env.SALT_ROUNDS = 10;
+
+// **************************
+// SEED token
+// **************************
+process.env.SEED = process.env.SEED || 'secret-seed-development';
+
+// **************************
+// Token expiration
+// **************************
+// 60 segundos
+// 60 minutos
+// 24 horas
+// 30 dias
+process.env.TOKEN_EXPIRATION = 60 * 60;

@@ -1,5 +1,9 @@
+const jwt = require('jsonwebtoken');
 const { createUserService, loginService, getUsersService, getUserService, updateUserService, deleteUserService } = require('../services/userService');
 const { InvalidFieldsError, UnknownError, InvalidIdError, AuthError } = require('../errors');
+
+const TOKEN_EXPIRATION = process.env.TOKEN_EXPIRATION;
+const SEED = process.env.SEED;
 
 const createUserController = async (req, res) => {
   try {
@@ -35,9 +39,11 @@ const loginController = async (req, res) => {
   try {
     const user = req.body;
     const { user: loggedUser } = await loginService(user);
+    const token = jwt.sign({ user: loggedUser }, SEED, { expiresIn: Number(TOKEN_EXPIRATION) });
     res.json({
       ok: true,
       user: loggedUser,
+      token,
     });
   } catch (error) {
     if (error instanceof AuthError) {
