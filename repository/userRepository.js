@@ -5,10 +5,10 @@ const { InvalidFieldsError, AuthError } = require('../errors');
 
 const SALT_ROUNDS = process.env.SALT_ROUNDS;
 
-const createUserRepo = async ({ name, lastName, email, password }) => {
+const createUserRepo = async ({ firstName, lastName, email, password }) => {
   const cryptedPass = bcrypt.hashSync(password, Number(SALT_ROUNDS));
   const user = new UserModel({
-    name,
+    firstName,
     lastName,
     email,
     password: cryptedPass,

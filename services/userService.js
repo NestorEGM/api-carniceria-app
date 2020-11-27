@@ -7,20 +7,20 @@ const createUserService = async (user) => {
   try {
     let validatedUser = null;
     let errors = null;
-    if (!user.name) {
+    if (!user.firstName) {
       errors = {
-        name: {
+        firstName: {
           message: 'El nombre es requerido',
         }
       };
     } else {
       validatedUser = {
-        name: user.name.trim(),
+        firstName: user.firstName.trim(),
       };
-      if (!validateName(validatedUser.name)) {
+      if (!validateName(validatedUser.firstName)) {
         errors = {
           ...errors,
-          name: {
+          firstName: {
             message: 'El nombre es invalido, solo se permiten letras',
           }
         };
