@@ -3,12 +3,18 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const routes = require('./routes');
 
 const PORT = process.env.PORT;
+const DOMAINS = process.env.DOMAINS;
 
 // Parse application/json
 app.use(bodyParser.json());
+
+app.use(cors({
+  origin: DOMAINS,
+}));
 
 // Routes
 app.use(routes);

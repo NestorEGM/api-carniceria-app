@@ -38,3 +38,8 @@ process.env.SEED = process.env.SEED || 'secret-seed-development';
 // 24 horas
 // 30 dias
 process.env.TOKEN_EXPIRATION = 60 * 60;
+
+// **************************
+// Authorized domains
+// **************************
+process.env.DOMAINS = process.env.DOMAINS || 'http://localhost:5000';
